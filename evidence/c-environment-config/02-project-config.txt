@@ -1,0 +1,13 @@
+[accessibility]
+screen_reader = True
+[component_manager]
+disable_update_check = True
+[compute]
+gce_metadata_read_timeout_sec = 30
+[core]
+account = allan2604b@gmail.com
+disable_usage_reporting = False
+project = ycgl-booking-204b
+universe_domain = googleapis.com
+[metrics]
+environment = devshell
