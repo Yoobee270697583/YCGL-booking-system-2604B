@@ -1,0 +1,41 @@
+steps:
+  - id: "Build container image"
+    name: gcr.io/k8s-skaffold/pack
+    args:
+      - "build"
+      - "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REGISTRY}/${_SERVICE_NAME}:latest"
+      - "--builder=gcr.io/buildpacks/builder"
+
+  - id: "Push container image"
+    name: gcr.io/cloud-builders/docker
+    args:
+      - "push"
+      - "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REGISTRY}/${_SERVICE_NAME}:latest"
+
+  - id: "Deploy migration job"
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: /bin/bash
+    args:
+      - "-c"
+      - |
+        gcloud run jobs deploy ${_JOB_NAME} \
+          --region ${_REGION} \
+          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_ARTIFACT_REGISTRY}/${_SERVICE_NAME}:latest \
+          --command migrate \
+          --service-account ${_SERVICE_ACCOUNT} \
+          --set-cloudsql-instances ${_INSTANCE_CONNECTION_NAME} \
+          --set-env-vars DB_NAME=ycgl,DB_USER=ycgl-user,DB_HOST=/cloudsql/${_INSTANCE_CONNECTION_NAME},ADMIN_URL=unused \
+          --set-secrets DB_PASSWORD=ycgl-db-password:latest,SECRET_KEY=ycgl-secret-key:latest
+
+  - id: "Run migration job"
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args: ["run", "jobs", "execute", "${_JOB_NAME}", "--region", "${_REGION}", "--wait"]
+
+substitutions:
+  _REGION: australia-southeast1
+  _ARTIFACT_REGISTRY: cloud-run-source-deploy
+  _SERVICE_NAME: ycgl-booking
+  _JOB_NAME: ycgl-migrate
+  _SERVICE_ACCOUNT: ycgl-run-sa@ycgl-booking-204b.iam.gserviceaccount.com
+  _INSTANCE_CONNECTION_NAME: ycgl-booking-204b:australia-southeast1:django-tutorial-app
