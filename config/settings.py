@@ -20,6 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def env_list(name):
     return [item.strip() for item in os.environ.get(name, "").split(",") if item.strip()]
 
+# 
+ADMIN_URL = os.environ["ADMIN_URL"].strip("/") + "/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
