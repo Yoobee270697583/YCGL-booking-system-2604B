@@ -1,0 +1,10 @@
+{% extends "bookings/base.html" %}
+
+{% block title %}Your booking{% endblock %}
+
+{% block content %}
+<h1>Your application</h1>
+<p>{{ booking.name }}, {{ booking.date }}, {{ booking.start_time|time:"g:i A" }} to {{ booking.end_time|time:"g:i A" }}</p>
+<p>Status: <strong>{{ booking.get_status_display }}</strong></p>
+<p>Keep this page's address. It's how you check your booking.</p>
+{% endblock %}
