@@ -76,8 +76,7 @@ class Booking(models.Model):
         ).exclude(pk=self.pk)
         if clashing.exists():
             return "booked"
-
-            return None
+        return None
 
     def has_conflict(self):
         return self.conflict_reason() is not None
