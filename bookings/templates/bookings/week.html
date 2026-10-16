@@ -1,0 +1,30 @@
+{% extends "bookings/base.html" %}
+
+{% block title %}Room bookings{% endblock %}
+
+{% block content %}
+<h1>YCGL room bookings</h1>
+<p class="lead">{{ monday|date:"j F" }} to {{ sunday|date:"j F Y" }}</p>
+
+<p>
+  <a href="{% url 'week' %}?start={{ prev_monday|date:'Y-m-d' }}">&larr; Previous week</a>
+  &nbsp;|&nbsp;
+  <a href="{% url 'week' %}">This week</a>
+  &nbsp;|&nbsp;
+  <a href="{% url 'week' %}?start={{ next_monday|date:'Y-m-d' }}">Next week &rarr;</a>
+</p>
+
+{% for day in days %}
+<section class="mb-3">
+  <h2 class="h5">{{ day.date|date:"l j F" }}</h2>
+  {% if day.closed %}
+    <p><strong>Closed</strong> - the room can't be booked on this day.</p>
+  {% endif %}
+  {% for b in day.bookings %}
+    <p class="mb-1">{{ b.start_time|time:"g:i A" }} to {{ b.end_time|time:"g:i A" }} - {{ b.name }}</p>
+  {% empty %}
+    {% if not day.closed %}<p class="text-muted">No bookings</p>{% endif %}
+  {% endfor %}
+</section>
+{% endfor %}
+{% endblock %}
