@@ -8,9 +8,10 @@ const messages = {
   booked: ["danger", "The clubroom is already booked at that time."],
   blackout: ["danger", "The clubroom is closed on that date."],
   order: ["warning", "The end time needs to be after the start time."],
+  window: ["danger", "Applications are not open for that week."],
 };
 
-function show(state) {
+function show(state, text) {
   const entry = messages[state];
   if (!entry) {
     box.className = "";
@@ -18,7 +19,7 @@ function show(state) {
     return;
   }
   box.className = "alert alert-" + entry[0] + " py-2";
-  box.textContent = entry[1];
+  box.textContent = text || entry[1];
 }
 
 async function checkAvailability() {
@@ -30,7 +31,7 @@ async function checkAvailability() {
   try {
     const response = await fetch(box.dataset.url + "?" + params);
     const data = await response.json();
-    show(data.state);
+    show(data.state, data.message);
   } catch (error) {
     show("");
   }

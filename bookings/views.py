@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from .forms import BookingForm
 from .models import BlackoutPeriod, Booking
+from .window import window_message
 
 
 def apply(request):
@@ -70,6 +71,10 @@ def check(request):
         end = datetime.time.fromisoformat(request.GET.get("end", ""))
     except ValueError:
         return JsonResponse({"state": "incomplete"})
+
+    message = window_message(date)
+    if message:
+        return JsonResponse({"state": "window", "message": message})
 
     if end <= start:
         return JsonResponse({"state": "order"})
