@@ -1,5 +1,5 @@
 {% extends "bookings/base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags static %}
 
 {% block title %}Apply to book the room{% endblock %}
 
@@ -8,6 +8,9 @@
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
+  <div id="availability" data-url="{% url 'check' %}" aria-live="polite"></div>
   <button type="submit" class="btn btn-primary">Send application</button>
 </form>
+
+<script src="{% static 'bookings/availability.js' %}" defer></script>
 {% endblock %}
