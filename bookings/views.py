@@ -1,5 +1,6 @@
 import datetime
 
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
@@ -61,3 +62,17 @@ def week(request):
             "next_monday": monday + datetime.timedelta(days=7),
         },
     )
+
+def check(request):
+    try:
+        date = datetime.date.fromisoformat(request.GET.get("date", ""))
+        start = datetime.time.fromisoformat(request.GET.get("start", ""))
+        end = datetime.time.fromisoformat(request.GET.get("end", ""))
+    except ValueError:
+        return JsonResponse({"state": "incomplete"})
+
+    if end <= start:
+        return JsonResponse({"state": "order"})
+
+    reason = Booking(date=date, start_time=start, end_time=end).conflict_reason()
+    return JsonResponse({"state": reason or "free"})
