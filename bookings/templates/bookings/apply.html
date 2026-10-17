@@ -8,6 +8,10 @@
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
+  <div style="position: absolute; left: -9999px;" aria-hidden="true">
+    <label for="id_website">Leave this field empty</label>
+    <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
+  </div>
   <div id="availability" data-url="{% url 'check' %}" aria-live="polite"></div>
   <button type="submit" class="btn btn-primary">Send application</button>
 </form>

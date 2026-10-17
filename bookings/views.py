@@ -13,6 +13,9 @@ def apply(request):
     if request.method == "POST":
         form = BookingForm(request.POST)
         if form.is_valid():
+            if request.POST.get("website"):
+                # A real person never sees this field. Pretend it worked, save nothing.
+                return render(request, "bookings/status.html", {"booking": form.instance})
             booking = form.save()
             return redirect("status", token=booking.token)
     else:
