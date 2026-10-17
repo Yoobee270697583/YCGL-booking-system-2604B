@@ -1,0 +1,151 @@
+/* YCGL palette, taken from the club poster. Bootstrap 5.3 is switched to its
+   dark theme in base.html; the rules below re-point its variables at these. */
+:root {
+  --bg: #180634;
+  --panel: #211048;
+  --panel-2: #2a1359;
+
+  --yellow: #ffc21e;
+  --cyan: #4fd2fa;
+  --magenta: #ff4d7d;
+  --lime: #a3e635;
+
+  --text: #efe9fb;
+  --dim: #b0a2ce;
+  --faint: #8a7cab;
+
+  --line: rgba(190, 165, 255, 0.22);
+  --line-2: rgba(190, 165, 255, 0.4);
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--text);
+  --bs-body-font-family: "Chakra Petch", system-ui, sans-serif;
+  --bs-heading-color: var(--text);
+  --bs-secondary-color: var(--dim);
+  --bs-tertiary-color: var(--faint);
+  --bs-border-color: var(--line);
+  --bs-link-color: var(--cyan);
+  --bs-link-color-rgb: 79, 210, 250;
+  --bs-link-hover-color: #8fe3fc;
+  --bs-link-hover-color-rgb: 143, 227, 252;
+}
+
+/* Navigation */
+nav {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.75rem;
+}
+
+/* Form fields */
+.form-control,
+.form-select {
+  background-color: var(--panel);
+  border-color: var(--line-2);
+  color: var(--text);
+}
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--panel-2);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 0.2rem rgba(79, 210, 250, 0.25);
+  color: var(--text);
+}
+
+/* The one primary action on a screen */
+.btn-primary {
+  --bs-btn-color: #2a0a14;
+  --bs-btn-bg: var(--yellow);
+  --bs-btn-border-color: var(--yellow);
+  --bs-btn-hover-color: #2a0a14;
+  --bs-btn-hover-bg: #ffcf52;
+  --bs-btn-hover-border-color: #ffcf52;
+  --bs-btn-active-color: #2a0a14;
+  --bs-btn-active-bg: #e6ad0a;
+  --bs-btn-active-border-color: #e6ad0a;
+  --bs-btn-focus-shadow-rgb: 255, 194, 30;
+  font-weight: 600;
+}
+
+/* Messages: tinted fill, tinted border, solid 3px left edge */
+.alert {
+  --bs-alert-color: var(--text);
+  border-left-width: 3px;
+}
+.alert-success {
+  --bs-alert-bg: rgba(79, 210, 250, 0.11);
+  --bs-alert-border-color: rgba(79, 210, 250, 0.5);
+  border-left-color: var(--cyan);
+}
+.alert-danger {
+  --bs-alert-bg: rgba(255, 77, 125, 0.11);
+  --bs-alert-border-color: rgba(255, 77, 125, 0.5);
+  border-left-color: var(--magenta);
+}
+.alert-warning {
+  --bs-alert-bg: rgba(255, 194, 30, 0.11);
+  --bs-alert-border-color: rgba(255, 194, 30, 0.5);
+  border-left-color: var(--yellow);
+}
+
+/* Booking status on the applicant's page */
+.status {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid;
+  border-left-width: 3px;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+.status-pending {
+  color: var(--cyan);
+  background: rgba(79, 210, 250, 0.11);
+  border-color: rgba(79, 210, 250, 0.5);
+  border-left-color: var(--cyan);
+}
+.status-approved {
+  color: var(--lime);
+  background: rgba(163, 230, 53, 0.11);
+  border-color: rgba(163, 230, 53, 0.5);
+  border-left-color: var(--lime);
+}
+.status-declined {
+  color: var(--magenta);
+  background: rgba(255, 77, 125, 0.11);
+  border-color: rgba(255, 77, 125, 0.5);
+  border-left-color: var(--magenta);
+}
+.status-cancelled {
+  color: var(--dim);
+  background: rgba(176, 162, 206, 0.11);
+  border-color: rgba(176, 162, 206, 0.5);
+  border-left-color: var(--dim);
+}
+
+/* A blacked-out day on the week page */
+.day-closed {
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 77, 125, 0.11);
+  border: 1px solid rgba(255, 77, 125, 0.5);
+  border-left: 3px solid var(--magenta);
+  border-radius: 0.25rem;
+}
+
+/* Honeypot: real visitors never see this field */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Browser print: dark theme text would vanish on white paper */
+@media print {
+  [data-bs-theme="dark"] {
+    --bs-body-bg: #fff;
+    --bs-body-color: #000;
+    --bs-heading-color: #000;
+    --bs-secondary-color: #333;
+    --bs-link-color: #000;
+    --bs-link-color-rgb: 0, 0, 0;
+  }
+}

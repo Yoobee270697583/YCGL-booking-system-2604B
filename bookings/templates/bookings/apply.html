@@ -8,7 +8,7 @@
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
-  <div style="position: absolute; left: -9999px;" aria-hidden="true">
+  <div class="hp-field" aria-hidden="true">
     <label for="id_website">Leave this field empty</label>
     <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
   </div>

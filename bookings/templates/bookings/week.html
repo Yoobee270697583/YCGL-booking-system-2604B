@@ -18,7 +18,7 @@
 <section class="mb-3">
   <h2 class="h5">{{ day.date|date:"l j F" }}</h2>
   {% if day.closed %}
-    <p><strong>Closed</strong> - the room can't be booked on this day.</p>
+    <p class="day-closed"><strong>Closed</strong> - the room can't be booked on this day.</p>
   {% endif %}
   {% for b in day.bookings %}
     <p class="mb-1">{{ b.start_time|time:"g:i A" }} to {{ b.end_time|time:"g:i A" }} - {{ b.name }}</p>
