@@ -3,8 +3,13 @@
 {% block title %}Your booking{% endblock %}
 
 {% block content %}
-<h1>Your application</h1>
-<p>{{ booking.name }}, {{ booking.date }}, {{ booking.start_time|time:"g:i A" }} to {{ booking.end_time|time:"g:i A" }}</p>
-<p>Status: <strong class="status status-{{ booking.status }}">{{ booking.get_status_display }}</strong>
-<p>Keep this page's address. It's how you check your booking.</p>
+<h1 class="h3 mb-3">Your booking</h1>
+<div class="card-ycgl">
+  <p class="mb-1"><strong class="status status-{{ booking.status }}">{{ booking.get_status_display }}</strong></p>
+  <p class="mt-3 mb-1"><strong>{{ booking.name }}</strong></p>
+  <p class="mb-1">{{ booking.date|date:"l j F Y" }}, {{ booking.start_time|time:"g:i A" }} &ndash; {{ booking.end_time|time:"g:i A" }}</p>
+  <p class="text-body-secondary">{{ booking.purpose|linebreaksbr }}</p>
+  <hr>
+  <p class="text-body-secondary mb-0">Save this page's link. It's the only way to check your booking, and nobody else can guess it.</p>
+</div>
 {% endblock %}

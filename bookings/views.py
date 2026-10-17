@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from .forms import BookingForm
 from .models import BlackoutPeriod, Booking
-from .window import window_message
+from .window import open_week_monday, window_message
 
 
 def apply(request):
@@ -20,7 +20,14 @@ def apply(request):
             return redirect("status", token=booking.token)
     else:
         form = BookingForm()
-    return render(request, "bookings/apply.html", {"form": form})
+
+    monday = open_week_monday(timezone.localdate())
+    sunday = monday + datetime.timedelta(days=6)
+    return render(
+        request,
+        "bookings/apply.html",
+        {"form": form, "monday": monday, "sunday": sunday},
+    )
 
 
 def status(request, token):

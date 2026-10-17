@@ -138,6 +138,18 @@ main.container {
   border-left-color: var(--dim);
 }
 
+/* A card around a page's main content */
+.card-ycgl {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.card-ycgl hr {
+  border-color: var(--line);
+  opacity: 1;
+}
+
 /* Week page: one card per day */
 .day {
   background: var(--panel);

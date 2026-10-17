@@ -4,17 +4,21 @@
 {% block title %}Apply to book the room{% endblock %}
 
 {% block content %}
-<h1>Apply to book the YCGL room</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form|crispy }}
-  <div class="hp-field" aria-hidden="true">
-    <label for="id_website">Leave this field empty</label>
-    <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
-  </div>
-  <div id="availability" data-url="{% url 'check' %}" aria-live="polite"></div>
-  <button type="submit" class="btn btn-primary">Send application</button>
-</form>
+<h1 class="h3 mb-1">Book the clubroom</h1>
+<p class="text-body-secondary">Applications are open for <strong>{{ monday|date:"j M" }} to {{ sunday|date:"j M" }}</strong>. An admin will confirm your booking with you on Microsoft Teams.</p>
+
+<div class="card-ycgl">
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="hp-field" aria-hidden="true">
+      <label for="id_website">Leave this field empty</label>
+      <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
+    </div>
+    <div id="availability" data-url="{% url 'check' %}" aria-live="polite"></div>
+    <button type="submit" class="btn btn-primary">Send application</button>
+  </form>
+</div>
 
 <script src="{% static 'bookings/availability.js' %}" defer></script>
 {% endblock %}
