@@ -11,10 +11,13 @@
   <link href="{% static 'bookings/styles.css' %}" rel="stylesheet">
 </head>
 <body>
-    <nav class="container pt-3">
-    <a href="{% url 'apply' %}" class="me-3">Apply to book</a>
-    <a href="{% url 'week' %}">Room bookings</a>
-  </nav>
+  <nav class="navbar mb-4"><div class="container">
+    <a class="brand" href="{% url 'apply' %}">YCGL Gaming Lounge</a>
+    <span>
+      <a href="{% url 'apply' %}">Apply to book</a>
+      <a href="{% url 'week' %}">Room bookings</a>
+    </span>
+  </div></nav>
   <main class="container py-4">
     {% block content %}{% endblock %}
   </main>

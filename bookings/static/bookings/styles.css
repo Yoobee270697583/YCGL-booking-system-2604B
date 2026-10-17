@@ -33,9 +33,24 @@
 }
 
 /* Navigation */
-nav {
+/* Navigation */
+.navbar {
+  background: var(--panel-2);
   border-bottom: 1px solid var(--line);
-  padding-bottom: 0.75rem;
+}
+.navbar a {
+  color: var(--text);
+  text-decoration: none;
+  margin-right: 1.25rem;
+}
+.navbar .brand {
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+/* Keep the page content a readable width */
+main.container {
+  max-width: 860px;
 }
 
 /* Form fields */
@@ -123,13 +138,36 @@ nav {
   border-left-color: var(--dim);
 }
 
-/* A blacked-out day on the week page */
-.day-closed {
-  padding: 0.4rem 0.75rem;
-  background: rgba(255, 77, 125, 0.11);
-  border: 1px solid rgba(255, 77, 125, 0.5);
+/* Week page: one card per day */
+.day {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+.slot {
+  border-left: 3px solid var(--cyan);
+  background: rgba(79, 210, 250, 0.09);
+  padding: 0.35rem 0.75rem;
+  margin: 0.35rem 0;
+  border-radius: 4px;
+}
+.closed {
   border-left: 3px solid var(--magenta);
-  border-radius: 0.25rem;
+  background: rgba(255, 77, 125, 0.1);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+}
+.btn-outline-ycgl {
+  --bs-btn-color: var(--text);
+  --bs-btn-border-color: var(--line-2);
+  --bs-btn-hover-color: var(--text);
+  --bs-btn-hover-bg: var(--panel-2);
+  --bs-btn-hover-border-color: var(--line-2);
+  --bs-btn-active-color: var(--text);
+  --bs-btn-active-bg: var(--panel-2);
+  --bs-btn-active-border-color: var(--line-2);
 }
 
 /* Honeypot: real visitors never see this field */
@@ -138,14 +176,23 @@ nav {
   left: -9999px;
 }
 
-/* Browser print: dark theme text would vanish on white paper */
+/* Browser print: swap the dark tokens for light ones so nothing prints
+   pale-on-white or dark-on-dark, whatever the "background graphics" setting */
 @media print {
+  :root {
+    --bg: #fff;
+    --panel: #fff;
+    --panel-2: #fff;
+    --text: #000;
+    --dim: #333;
+    --faint: #333;
+    --line: #999;
+    --line-2: #666;
+  }
   [data-bs-theme="dark"] {
-    --bs-body-bg: #fff;
-    --bs-body-color: #000;
-    --bs-heading-color: #000;
-    --bs-secondary-color: #333;
-    --bs-link-color: #000;
     --bs-link-color-rgb: 0, 0, 0;
+  }
+  .navbar .brand {
+    color: #000;
   }
 }
