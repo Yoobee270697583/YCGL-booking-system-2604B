@@ -108,7 +108,7 @@ class Booking(models.Model):
             and "end_time" not in errors
             and self.end_time <= self.start_time
         ):
-            errors["end_time"] = "Bookings can't end after they start... are you sure your times are entered correctly?"
+            errors["end_time"] = "Bookings can't end before they start... are you sure your times are entered correctly?"
 
         if (
             "start_time" not in errors
