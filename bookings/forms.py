@@ -12,7 +12,7 @@ from .models import (
 from .window import window_message
 
 
-# Helper method for the Booking Form. Helps to set available times to 15 minute increments
+# Helper method for the Booking Form. Sets available times to 15 minute increments
 def time_choices(first, last):
     # Dropdown options every 15 minutes from `first` to `last`, inclusive.
     choices = [("", "Choose a time")]

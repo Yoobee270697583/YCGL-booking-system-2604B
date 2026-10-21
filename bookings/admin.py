@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 
-from .models import BlackoutPeriod, Booking
+from .models import Booking, BlackoutPeriod
 
 
 @admin.register(Booking)
