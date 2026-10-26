@@ -81,7 +81,6 @@ class Booking(models.Model):
         # If yes, return the reason
         if blackout.exists():
             return "blackout"
-        return None
 
         # Check a booking against other existing bookings
         clashing = Booking.objects.filter(
