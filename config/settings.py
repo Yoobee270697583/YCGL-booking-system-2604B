@@ -16,33 +16,45 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 
+# Takes a plain text environment variable passed in and turns it into a list
 def env_list(name):
     return [item.strip() for item in os.environ.get(name, "").split(",") if item.strip()]
+# This is because environment variables can only be stored as text, and some of my environment variables are actually a comma separated list of values
+# But are stored as plain text
+# However, Django settings needs a python list, and not plain text
 
-# 
+# The admin site's address, read from the environment so it isn't the default /admin/
+# Slashes are tidied so it always ends in exactly one "/". There's deliberately no fallback, so the app won't start without it
 ADMIN_URL = os.environ["ADMIN_URL"].strip("/") + "/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# The secret key comes from the environment (Secret Manager on Cloud Run), never from the code
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "false").lower() == "true"  # 
+# Debug mode is off unless the environment explicitly sets DEBUG=true
+DEBUG = os.environ.get("DEBUG", "false").lower() == "true"
 
-# 
+# The website addresses Django will serve. Requests for any other host are refused
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS")
 
-# 
+# HTTPS security settings. They default to off so that local testing works, and are switched on in Cloud Run through environment variables
+# The first two only send the CSRF and session cookies over HTTPS
 CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "false").lower() == "true"
 SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "false").lower() == "true"
+# Redirect any plain HTTP request to HTTPS
 SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "false").lower() == "true"
+# Tell browsers to use HTTPS only for this many seconds, set by an environment variable
 SECURE_HSTS_SECONDS = int(os.environ.get("SECURE_HSTS_SECONDS", "0"))
+# Cloud Run passes requests to Django as HTTP, even if the request was originally HTTPS
+# Setting this makes sure Django knows a request coming in with this header ("HTTP_X_FORWARDED_PROTO") was HTTPS
+# Without it: the SECURE_SSL_REDIRECT setting above would think every request is plain HTTP and redirect it to HTTPS, which Cloud Run delivers as HTTP again, causing an endless redirect loop
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# 
+# The list of trusted request origins (e.g. https://your-service.run.app) allowed to submit forms to the site, set as an environment variable
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 
 
@@ -61,10 +73,12 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# Make forms render with Bootstrap 5 styling through django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # WhiteNoise serves the CSS and JavaScript files straight from the app. It must sit directly after SecurityMiddleware
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -96,7 +110,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# PostgreSQL. The connection details come from the environment
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -133,6 +147,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# The time zone behind timezone.localdate() in window.py
 TIME_ZONE = "Pacific/Auckland"
 
 USE_I18N = True
@@ -145,6 +160,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Where collectstatic gathers static files, and WhiteNoise's storage that compresses them and adds a version to each file name
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STORAGES = {

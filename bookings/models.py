@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 from django.db import models
 
-# Room hours: earliest start 8:30am, latest end 9:00pm, in 15-minute steps
+# Room hours: earliest start 8:30am, latest end 9:00pm, defined in quarter hour increments
 EARLIEST_START = datetime.time(8, 30)
 LATEST_START = datetime.time(20, 45)
 EARLIEST_END = datetime.time(8, 45)

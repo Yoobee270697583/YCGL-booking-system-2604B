@@ -4,22 +4,28 @@
 
 {% block content %}
 <h1 class="h3 mb-1">Clubroom bookings</h1>
+{# monday and sunday are the first and last dates of the week being shown, passed in by the week view #}
 <p class="text-body-secondary">Week of {{ monday|date:"j M Y" }} to {{ sunday|date:"j M Y" }}</p>
 
+{# Week navigation. The links add dates to the address, written as Y-m-d so the view can read it #}
 <div class="mb-3 d-flex gap-2 flex-wrap">
   <a class="btn btn-outline-ycgl" href="{% url 'week' %}?start={{ prev_monday|date:'Y-m-d' }}">&larr; Previous week</a>
   <a class="btn btn-outline-ycgl" href="{% url 'week' %}">This week</a>
   <a class="btn btn-outline-ycgl" href="{% url 'week' %}?start={{ next_monday|date:'Y-m-d' }}">Next week &rarr;</a>
 </div>
 
+{# days is the list of 7 dictionaries built in the week view. Each has a date, that day's approved bookings, and a closed flag #}
 {% for day in days %}
 <div class="day">
   <h2 class="h5 mb-2">{{ day.date|date:"l j M" }}</h2>
+  {# If a blackout period covers this day, show it as closed #}
   {% if day.closed %}
     <div class="closed"><strong>Closed</strong> - the room can't be booked on this day.</div>
   {% endif %}
+  {# Show each approved booking's time and name only #}
   {% for b in day.bookings %}
     <div class="slot"><strong>{{ b.start_time|time:"g:i A" }} &ndash; {{ b.end_time|time:"g:i A" }}</strong> &middot; {{ b.name }}</div>
+  {# {% empty %} runs when the day has no bookings #}
   {% empty %}
     {% if not day.closed %}<span class="text-body-secondary">No bookings</span>{% endif %}
   {% endfor %}

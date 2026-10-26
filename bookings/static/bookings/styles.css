@@ -1,5 +1,5 @@
-/* YCGL palette, taken from the club poster. Bootstrap 5.3 is switched to its
-   dark theme in base.html; the rules below re-point its variables at these. */
+/* YCGL palette, taken from the club poster. Bootstrap 5.3 is switched to its dark theme in base.html
+The rules below re-point its variables at these. */
 :root {
   --bg: #180634;
   --panel: #211048;
@@ -18,6 +18,7 @@
   --line-2: rgba(190, 165, 255, 0.4);
 }
 
+/* Point Bootstrap's own dark-theme variables at the YCGL palette above, so Bootstrap's components pick up the club colours */
 [data-bs-theme="dark"] {
   --bs-body-bg: var(--bg);
   --bs-body-color: var(--text);
@@ -32,7 +33,6 @@
   --bs-link-hover-color-rgb: 143, 227, 252;
 }
 
-/* Navigation */
 /* Navigation */
 .navbar {
   background: var(--panel-2);
@@ -83,11 +83,14 @@ main.container {
   font-weight: 600;
 }
 
-/* Messages: tinted fill, tinted border, solid 3px left edge */
+
+/* Bootstrap's alert classes, used by availability.js for the live availability message */
+/* The class names come from the the messages object in availability.js */
 .alert {
   --bs-alert-color: var(--text);
   border-left-width: 3px;
 }
+/* Success uses cyan to stay within the club palette */
 .alert-success {
   --bs-alert-bg: rgba(79, 210, 250, 0.11);
   --bs-alert-border-color: rgba(79, 210, 250, 0.5);
@@ -104,7 +107,7 @@ main.container {
   border-left-color: var(--yellow);
 }
 
-/* Booking status on the applicant's page */
+/* Booking status on the status.html page */
 .status {
   display: inline-block;
   padding: 0.1rem 0.6rem;
@@ -113,6 +116,7 @@ main.container {
   border-radius: 0.25rem;
   font-weight: 600;
 }
+/* Colour-coded badge for each booking status. The class name is built from the booking's status in status.html (e.g. status-approved) */
 .status-pending {
   color: var(--cyan);
   background: rgba(79, 210, 250, 0.11);
@@ -150,7 +154,9 @@ main.container {
   opacity: 1;
 }
 
+
 /* Week page: one card per day */
+/* A day's card on the week page, with a cyan-edged slot for each booking and a magenta-edged notice when the room is closed */
 .day {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -171,6 +177,7 @@ main.container {
   padding: 0.35rem 0.75rem;
   border-radius: 4px;
 }
+/* Outline button used for the week navigation links */
 .btn-outline-ycgl {
   --bs-btn-color: var(--text);
   --bs-btn-border-color: var(--line-2);
@@ -182,7 +189,8 @@ main.container {
   --bs-btn-active-border-color: var(--line-2);
 }
 
-/* Honeypot: real visitors never see this field */
+/* Honeypot: real visitors never see this field. 
+/* It's moved off-screen rather than hidden, so a bot reading the form still sees it and may fill it in */
 .hp-field {
   position: absolute;
   left: -9999px;
