@@ -10,7 +10,7 @@ from .models import BlackoutPeriod, Booking
 from .window import open_week_monday, application_window_message
 
 
-# define view for the main booking applications page
+# Define the view for the main booking applications page
 def apply(request):
     # If the form was submitted (a POST request)
     if request.method == "POST":
