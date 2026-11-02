@@ -8,6 +8,13 @@
 {% block content %}
 <h1 class="h3 mb-1">Book the YCGL Clubroom</h1>
 {# monday and sunday are the dates of the week open for applications, passed in from the apply view #}
+<ul>
+  <li>Applications must be made during the week <strong>prior</strong> to your desired booking.</li>
+  <li>Applications for next week close at 11:59pm on Friday night.</li>
+  <li>Applications for the following week open from 12:00am midnight on Saturday morning, 9 days ahead of time.</li>
+  <li>This has been done to allow club admins to only need to check applications once per week, over the weekend.</li>
+  <li>Exceptions can be made. If you require a booking for later this week, or further out in the future, please reach out to club admins via Teams, who can arrange this for you.</li>
+</ul>
 <p class="text-body-secondary">Applications are open for <strong>{{ monday|date:"j M" }} to {{ sunday|date:"j M" }}</strong>. An admin will confirm your booking with you on Microsoft Teams.</p>
 
 <div class="card-ycgl">
